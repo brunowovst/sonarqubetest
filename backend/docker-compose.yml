@@ -1,0 +1,21 @@
+version: '3'
+
+networks: 
+  node-network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:12.2-alpine
+    container_name: ${CONTAINER_DB}
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    restart: always
+    volumes:
+      - $PWD/database/data:/var/lib/postgresql/data
+    networks:
+      - node-network
